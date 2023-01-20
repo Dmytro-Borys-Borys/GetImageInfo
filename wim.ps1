@@ -96,10 +96,10 @@ ForEach-Object {
     }
     
     # intentamos guardar en una variable la información general sobre la imagen
-    try {
-        $OutText = dism /get-wiminfo /wimfile:$SourceFile -ErrorAction Stop
-    }
-    catch {
+    
+    $OutText = dism /get-wiminfo /wimfile:$SourceFile
+    
+    if ($LastExitCode -ne 0) {
         Write-Warning "No se ha conseguido obtener la información del archivo $SourceFile"
         if ($NoDismount -eq $false) {
             Dismount-DiskImage -ImagePath $FullImagePath | Out-Null
